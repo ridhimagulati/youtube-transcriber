@@ -15,6 +15,11 @@ def extract_video_id(url):
     return match.group(1)
 #  Fetch transcript from YouTube URL
 def get_transcript_from_url(url):
+    proxy_url = os.getenv("PROXY_URL")
+    proxies = {
+        "http": proxy_url,
+        "https": proxy_url
+    }
     video_id = extract_video_id(url)
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
     return " ".join([entry['text'] for entry in transcript])
